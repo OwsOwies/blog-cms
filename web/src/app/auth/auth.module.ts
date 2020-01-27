@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 
 import { MaterialModule } from '../material.module';
 
@@ -26,7 +25,6 @@ import { AuthRestService } from './services/auth.service';
 		AuthRoutingModule,
 		MaterialModule,
 		ReactiveFormsModule,
-		StoreModule.forFeature('auth', {}),
 		EffectsModule.forFeature([AuthEffects]),
 	],
 	providers: [AuthRestService],

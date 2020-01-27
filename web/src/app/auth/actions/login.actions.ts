@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { ErrorAction } from 'src/app/common/actions/error.action';
+import { User } from 'src/app/user/models';
 
 import { Credentials } from '../models';
 
@@ -15,7 +16,7 @@ export class Login implements Action {
 
 export class LoginSuccess implements Action {
 	public readonly type = LoginActionType.LOGIN_SUCCESS;
-	public constructor(public readonly payload: {}) {}
+	public constructor(public readonly payload: User) {}
 }
 
 export class LoginError extends ErrorAction {}
