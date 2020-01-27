@@ -1,7 +1,9 @@
 package main
 
-import "log"
+import (
+	"blog-api/pkg/api"
+)
 
 func main() {
-	log.Print("API is working")
+	api.StartAPI()
 }
