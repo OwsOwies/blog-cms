@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { MaterialModule } from './material.module';
 
 @NgModule({
 	bootstrap: [AppComponent],
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
 		AppRoutingModule,
 		AuthModule,
 		EffectsModule.forRoot([]),
+		MaterialModule,
 		StoreModule.forRoot({}),
 	],
 	providers: [],
