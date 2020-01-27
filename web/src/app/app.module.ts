@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
 	bootstrap: [AppComponent],
 	declarations: [AppComponent],
-	imports: [BrowserModule, AppRoutingModule],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		AuthModule,
+		EffectsModule.forRoot([]),
+		StoreModule.forRoot({}),
+	],
 	providers: [],
 })
 export class AppModule {}
