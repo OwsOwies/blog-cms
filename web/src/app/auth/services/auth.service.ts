@@ -17,7 +17,6 @@ export class AuthRestService {
 				isAdmin: false,
 				login: 'some login',
 				password: 'some pass',
-				posts: [],
 				visibleName: 'some visible name',
 			}),
 		);

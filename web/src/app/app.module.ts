@@ -9,6 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { BlogModule } from './blog/blog.module';
 import { MaterialModule } from './material.module';
 import { reducers } from './reducer/application.reducer';
 
@@ -20,6 +21,7 @@ import { reducers } from './reducer/application.reducer';
 		BrowserAnimationsModule,
 		AppRoutingModule,
 		AuthModule,
+		BlogModule,
 		EffectsModule.forRoot([]),
 		HttpClientModule,
 		MaterialModule,
