@@ -6,13 +6,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '../material.module';
 
 import { BlogRoutingModule } from './blog-routing.module';
+import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { BlogPageComponent } from './containers/blog-page/blog-page.component';
 import { BlogEffects } from './effects/blog.effects';
 import { LoadPostsResolver } from './guards/load-posts.resolver';
 import { BlogRestService } from './services/blog.service';
 
 @NgModule({
-	declarations: [BlogPageComponent],
+	declarations: [BlogPageComponent, BlogPostComponent],
 	imports: [
 		CommonModule,
 		BlogRoutingModule,

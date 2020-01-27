@@ -2,6 +2,7 @@ import { ActionReducerMap } from '@ngrx/store';
 import { List } from 'immutable';
 
 import { LoginAction, LoginActionType } from '../auth/actions/login.actions';
+import { DeletePostAction, DeletePostActionType } from '../blog/actions/delete-post.actions';
 import { LoadPostsAction, LoadPostsActionsType } from '../blog/actions/load-posts.actions';
 import { BlogPost } from '../blog/models';
 import { User } from '../user/models';
@@ -10,13 +11,13 @@ export interface ApplicationState {
 	state: State;
 }
 
-export type AppAction = LoginAction | LoadPostsAction;
+export type AppAction = LoginAction | LoadPostsAction | DeletePostAction;
 
 export const reducers: ActionReducerMap<ApplicationState, AppAction> = {
 	state: reducer,
 };
 
-interface State {
+export interface State {
 	posts: List<BlogPost>;
 	user: User | null;
 }
@@ -32,6 +33,11 @@ export function reducer(state: State = initialState, action: AppAction): State {
 			return { ...state, user: action.payload };
 		case LoadPostsActionsType.LOAD_SUCCESS:
 			return { ...state, posts: List(action.payload) };
+		case DeletePostActionType.DELETE_SUCCESS:
+			return {
+				...state,
+				posts: state.posts.remove(state.posts.findIndex(post => post.id === action.payload)),
+			};
 		default:
 			return state;
 	}

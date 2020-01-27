@@ -1,0 +1,13 @@
+<mat-card>
+	<mat-card-content>
+		<div *ngIf="isEditable" class="edit-button-bar">
+			<button mat-icon-button (click)="onEditClick()">
+				<mat-icon>edit</mat-icon>
+			</button>
+			<button mat-icon-button (click)="onDeleteClick()">
+				<mat-icon>delete</mat-icon>
+			</button>
+		</div>
+		<div>{{post.content}}</div>
+	</mat-card-content>
+</mat-card>

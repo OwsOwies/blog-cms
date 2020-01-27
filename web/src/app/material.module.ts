@@ -4,6 +4,7 @@ import {
 	MatCardModule,
 	MatIconModule,
 	MatInputModule,
+	MatPaginatorModule,
 	MatProgressBarModule,
 	MatRippleModule,
 } from '@angular/material';
@@ -14,6 +15,7 @@ import {
 		MatCardModule,
 		MatIconModule,
 		MatInputModule,
+		MatPaginatorModule,
 		MatProgressBarModule,
 		MatRippleModule,
 	],
@@ -22,6 +24,7 @@ import {
 		MatCardModule,
 		MatIconModule,
 		MatInputModule,
+		MatPaginatorModule,
 		MatProgressBarModule,
 		MatRippleModule,
 	],

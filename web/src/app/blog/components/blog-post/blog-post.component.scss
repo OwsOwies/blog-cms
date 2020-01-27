@@ -1,0 +1,21 @@
+mat-card {
+	margin: 20px;
+}
+
+mat-card-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.edit-button-bar {
+	background: #e0ecff;
+	border-radius: 10px;
+	border: 1px solid #858d98;
+	color: #858d98;
+	padding: 1.5px;
+	width: 100px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
