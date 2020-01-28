@@ -27,14 +27,10 @@ export class BlogRestService {
 	}
 
 	public getBiography(visibleName: string): Observable<BiographyValues> {
-		// tslint:disable-next-line no-console
-		console.log(visibleName);
-		return of({ bio: 'some bio', contact: 'some contact', login: 'some login', visibleName });
+		return this.http.get<BiographyValues>(`${this.API_URL}/users/${visibleName}`);
 	}
 
-	public editBiography(values: BiographyValues): Observable<void> {
-		// tslint:disable-next-line no-console
-		console.log(values);
-		return of(undefined);
+	public editBiography(values: BiographyValues, userId: number): Observable<void> {
+		return this.http.put<void>(`${this.API_URL}/users/${userId}`, values);
 	}
 }

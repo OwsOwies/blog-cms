@@ -113,7 +113,8 @@ export class BlogEffects {
 	public readonly editBiography$ = this.actions$.pipe(
 		ofType<EditBiography>(EditBiographyActionType.EDIT),
 		pluck<EditBiography, BiographyValues>('payload'),
-		switchMap(bioValues => this.blogService.editBiography(bioValues).pipe(
+		this.tupleWithLatestFrom(this.store.pipe(select(getUser))),
+		switchMap(([bioValues, user]) => this.blogService.editBiography(bioValues, user.ID).pipe(
 			map(() => new EditBiographySuccess(bioValues)),
 			catchError(err => of(new EditBiographyError(err))),
 		))

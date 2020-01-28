@@ -20,6 +20,8 @@ func (cr *Controller) RegisterRoutes(e *echo.Echo) {
 	e.POST("/posts/:id", cr.addBlogPost)
 	e.PUT("/posts/:id", cr.updateBlogPost)
 	e.DELETE("/posts/:id", cr.deleteBlogPost)
+	e.GET("/users/:id", cr.getBiography)
+	e.PUT("/users/:id", cr.updateBiography)
 }
 
 func (cr *Controller) login(c echo.Context) error {
@@ -146,4 +148,45 @@ func (cr *Controller) deleteBlogPost(c echo.Context) error {
 		return c.JSON(http.StatusCreated, "Deleted blog post")
 	}
 
+}
+
+func (cr *Controller) updateBiography(c echo.Context) error {
+	bio := &Biography{}
+
+	if err := c.Bind(bio); err != nil {
+		log.Print(err)
+		return c.JSON(http.StatusBadRequest, "error occured during binding")
+	}
+
+	userId := c.Param("id")
+	if intId, err := strconv.ParseUint(userId, 10, 32); err != nil {
+		log.Print(err)
+		return c.JSON(http.StatusBadRequest, "error occured during uint conv")
+	} else {
+		user := &User{}
+		db := cr.Db.Model(user).Where("ID = ?", uint(intId)).Update("bio", bio.Bio).Update("contact", bio.Contact).Update("visibleName", bio.VisibleName)
+
+		log.Print(db.Error)
+		if err := db.Error; err != nil {
+			log.Print(err)
+			return c.JSON(http.StatusBadRequest, "error occured on db")
+		}
+
+		return c.JSON(http.StatusCreated, "Updated blog post")
+	}
+}
+
+func (cr *Controller) getBiography(c echo.Context) error {
+	visibleName := c.Param("id")
+
+	user := &User{}
+	db := cr.Db.Where("visible_name = ?", visibleName).First(user)
+	if err := db.Error; err != nil {
+		log.Print(err)
+		return c.String(http.StatusBadRequest, "error occured on db")
+	}
+
+	bio := &Biography{Contact: user.Contact, Bio: user.Bio, VisibleName: user.VisibleName}
+
+	return c.JSON(http.StatusOK, bio)
 }
