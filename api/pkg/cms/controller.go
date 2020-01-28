@@ -16,8 +16,8 @@ type Controller struct {
 func (cr *Controller) RegisterRoutes(e *echo.Echo) {
 	e.POST("/login", cr.login)
 	e.POST("/register", cr.register)
-	e.GET("/posts/:userId", cr.getBlogPosts)
-	e.POST("/posts/:userId", cr.addBlogPost)
+	e.GET("/posts/:id", cr.getBlogPosts)
+	e.POST("/posts/:id", cr.addBlogPost)
 	e.PUT("/posts/:id", cr.updateBlogPost)
 	e.DELETE("/posts/:id", cr.deleteBlogPost)
 }
@@ -46,7 +46,7 @@ func (cr *Controller) register(c echo.Context) error {
 
 	if err := c.Bind(newUser); err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured during binding")
+		return c.JSON(http.StatusBadRequest, "error occured during binding")
 	}
 
 	cr.Db.NewRecord(newUser)
@@ -55,37 +55,42 @@ func (cr *Controller) register(c echo.Context) error {
 	log.Print(db.Error)
 	if err := db.Error; err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured on db")
+		return c.JSON(http.StatusBadRequest, "error occured on db")
 	}
 
-	return c.String(http.StatusCreated, "Created new user")
+	return c.JSON(http.StatusCreated, "Created new user")
 }
 
 func (cr *Controller) getBlogPosts(c echo.Context) error {
-	userId := c.Param("userId")
+	visibleName := c.Param("id")
+	log.Print(visibleName, "for blog posts")
 
-	var blogPosts []*BlogPost
-	db := cr.Db.Where("userId = ?", userId).Find(blogPosts)
+	user := &User{}
+	db := cr.Db.Where("visible_name = ?", visibleName).First(user)
+
+	var blogPosts []BlogPost
+	db = cr.Db.Where("user_id = ?", user.ID).Find(&blogPosts)
 	if err := db.Error; err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured on db")
+		return c.JSON(http.StatusBadRequest, "error occured on db")
 	}
 	return c.JSON(http.StatusOK, blogPosts)
 }
 
 func (cr *Controller) addBlogPost(c echo.Context) error {
-	userId := c.Param("userId")
+	userId := c.Param("id")
+	log.Print(userId, "for adding new post")
 
 	blogPost := &BlogPost{}
 
 	if err := c.Bind(blogPost); err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured during binding")
+		return c.JSON(http.StatusBadRequest, "error occured during binding")
 	}
 
 	if intId, err := strconv.ParseUint(userId, 10, 32); err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured during uint conv")
+		return c.JSON(http.StatusBadRequest, "error occured during uint conv")
 	} else {
 		blogPost.UserId = uint(intId)
 	}
@@ -96,10 +101,10 @@ func (cr *Controller) addBlogPost(c echo.Context) error {
 	log.Print(db.Error)
 	if err := db.Error; err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured on db")
+		return c.JSON(http.StatusBadRequest, "error occured on db")
 	}
 
-	return c.String(http.StatusCreated, "Created new blog post")
+	return c.JSON(http.StatusCreated, "Created new blog post")
 }
 
 func (cr *Controller) updateBlogPost(c echo.Context) error {
@@ -107,7 +112,7 @@ func (cr *Controller) updateBlogPost(c echo.Context) error {
 
 	if err := c.Bind(blogPost); err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured during binding")
+		return c.JSON(http.StatusBadRequest, "error occured during binding")
 	}
 
 	db := cr.Db.Model(blogPost).Update("Content")
@@ -115,10 +120,10 @@ func (cr *Controller) updateBlogPost(c echo.Context) error {
 	log.Print(db.Error)
 	if err := db.Error; err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured on db")
+		return c.JSON(http.StatusBadRequest, "error occured on db")
 	}
 
-	return c.String(http.StatusCreated, "Updated blog post")
+	return c.JSON(http.StatusCreated, "Updated blog post")
 }
 
 func (cr *Controller) deleteBlogPost(c echo.Context) error {
@@ -126,7 +131,7 @@ func (cr *Controller) deleteBlogPost(c echo.Context) error {
 
 	if intId, err := strconv.ParseUint(id, 10, 32); err != nil {
 		log.Print(err)
-		return c.String(http.StatusBadRequest, "error occured during uint conv")
+		return c.JSON(http.StatusBadRequest, "error occured during uint conv")
 	} else {
 		idHolder := &BlogPost{}
 		idHolder.ID = uint(intId)
@@ -135,10 +140,10 @@ func (cr *Controller) deleteBlogPost(c echo.Context) error {
 
 		if err := db.Error; err != nil {
 			log.Print(err)
-			return c.String(http.StatusBadRequest, "error occured on db")
+			return c.JSON(http.StatusBadRequest, "error occured on db")
 		}
 
-		return c.String(http.StatusCreated, "Deleted blog post")
+		return c.JSON(http.StatusCreated, "Deleted blog post")
 	}
 
 }

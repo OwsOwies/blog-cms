@@ -49,6 +49,12 @@ export class AuthEffects {
 		),
 	);
 
+	@Effect({ dispatch: false })
+	public readonly registerSuccess$ = this.actions$.pipe(
+		ofType<RegisterSuccess>(RegisterActionType.REGISTER_SUCCESS),
+		tap(() => this.router.navigate(["auth/login"])),
+	);
+
 	public constructor(
 		private actions$: Actions,
 		private authService: AuthRestService,

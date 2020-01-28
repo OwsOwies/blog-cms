@@ -19,7 +19,7 @@ type LoginBody struct {
 
 type BlogPost struct {
 	gorm.Model
-	UserId  uint   `json:"userId"`
+	UserId  uint   `json:"userId,omitempty"`
 	Date    string `json:"date"`
 	Content string `json:"content"`
 }

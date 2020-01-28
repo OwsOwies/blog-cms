@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ofType, Actions, Effect } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
-import { catchError, map, pluck, switchMap, take, tap } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { of, Observable } from 'rxjs';
+import { catchError, map, pluck, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import { getUser } from 'src/app/reducer/application.selectors';
 
 import {
@@ -38,6 +38,11 @@ import { BiographyValues } from 'src/app/user/models';
 
 @Injectable()
 export class BlogEffects {
+	private tupleWithLatestFrom = <T, S>(selector$: Observable<S>) => (
+		in$: Observable<T>,
+	): Observable<[T, S]> =>
+		in$.pipe(withLatestFrom(selector$, (input: T, fromSelector: S) => [input, fromSelector])); 
+
 	@Effect()
 	public readonly getBlogPosts$ = this.actions$.pipe(
 		ofType<LoadPosts>(LoadPostsActionsType.LOAD),
@@ -66,8 +71,9 @@ export class BlogEffects {
 	public readonly addBlogPost$ = this.actions$.pipe(
 		ofType<AddPost>(AddPostActionType.ADD),
 		pluck<AddPost, BlogPost>('payload'),
-		switchMap(post =>
-			this.blogService.addBlogPost(post, 'some user id mock').pipe(
+		this.tupleWithLatestFrom(this.store.pipe(select(getUser))),
+		switchMap(([post, user]) =>
+			this.blogService.addBlogPost(post, user.ID).pipe(
 				map(() => new AddPostSuccess(post)),
 				catchError(err => of(new AddPostError(err))),
 			),

@@ -56,7 +56,7 @@ export function reducer(state: State = initialState, action: AppAction): State {
 		case DeletePostActionType.DELETE_SUCCESS:
 			return {
 				...state,
-				posts: state.posts.remove(state.posts.findIndex(post => post.id === action.payload)),
+				posts: state.posts.remove(state.posts.findIndex(post => post.ID === action.payload)),
 			};
 
 		case AddPostActionType.ADD_SUCCESS:
@@ -89,6 +89,7 @@ export function reducer(state: State = initialState, action: AppAction): State {
 				...state,
 				bio: action.payload,
 				user: new User(
+					state.user.ID,
 					action.payload.bio,
 					action.payload.contact, 
 					state.user.isAdmin,

@@ -7,7 +7,7 @@ import { BlogPost, BlogPostId } from '../models';
 
 @Injectable()
 export class BlogRestService {
-	private API_URL = 'localhost:1343';
+	private API_URL = 'http://localhost:1343';
 	public constructor(private http: HttpClient) {}
 
 	public getBlogPosts(userId: string): Observable<BlogPost[]> {
@@ -15,15 +15,11 @@ export class BlogRestService {
 	}
 
 	public deleteBlogPost(id: BlogPostId): Observable<void> {
-		// tslint:disable-next-line no-console
-		console.log(id);
-		return of(undefined);
+		return this.http.delete<void>(`${this.API_URL}/posts/${id}`);
 	}
 
-	public addBlogPost(post: BlogPost, userId: string): Observable<void> {
-		// tslint:disable-next-line no-console
-		console.log(post, userId);
-		return of(undefined);
+	public addBlogPost(post: BlogPost, userId: number): Observable<void> {
+		return this.http.post<void>(`${this.API_URL}/posts/${userId}`, post);
 	}
 
 	public getBiography(visibleName: string): Observable<BiographyValues> {

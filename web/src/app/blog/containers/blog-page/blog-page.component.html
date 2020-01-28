@@ -13,11 +13,6 @@
 		(delete)="onPostDelete(post)"
 		(edit)="onPostEdit(post)">
 	</app-blog-post>
-	<mat-paginator
-		[length]="(blogPosts$ | async)?.size"
-		[pageSize]="pageSize"
-		[pageSizeOptions]="pageSizeOptions">
-	</mat-paginator>
 </div>
 <div class="bio-section">
 	<button

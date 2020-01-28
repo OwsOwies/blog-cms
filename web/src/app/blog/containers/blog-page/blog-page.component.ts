@@ -36,7 +36,7 @@ export class BlogPageComponent implements OnDestroy {
 	}
 
 	public onPostDelete(post: BlogPost): void {
-		this.store.dispatch(new DeletePost(post.id));
+		this.store.dispatch(new DeletePost(post.ID));
 	}
 
 	public onPostEdit(post: BlogPost): void {

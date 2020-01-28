@@ -1,7 +1,7 @@
-export type BlogPostId = string;
+export type BlogPostId = number;
 
 export interface BlogPost {
-	id: BlogPostId;
+	ID: BlogPostId;
 	date: Date;
 	content: string;
 }

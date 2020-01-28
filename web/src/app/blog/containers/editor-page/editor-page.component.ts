@@ -27,7 +27,7 @@ export class EditorPageComponent implements OnDestroy {
 	public constructor(private readonly store: Store<{}>) {}
 
 	public onSubmit(): void {
-		this.store.dispatch(new AddPost({ date: new Date(), content: this.model.editorData, id: '' }));
+		this.store.dispatch(new AddPost({ date: new Date(), content: this.model.editorData, ID: 0 }));
 	}
 
 	public ngOnDestroy(): void {
