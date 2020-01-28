@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ofType, Actions, Effect } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, pluck, switchMap } from 'rxjs/operators';
+import { catchError, map, pluck, switchMap, take, tap } from 'rxjs/operators';
+import { getUser } from 'src/app/reducer/application.selectors';
 
 import { Login, LoginActionType, LoginError, LoginSuccess } from '../actions/login.actions';
 import {
@@ -27,6 +30,13 @@ export class AuthEffects {
 		),
 	);
 
+	@Effect({ dispatch: false })
+	public readonly loginSuccess$ = this.actions$.pipe(
+		ofType<LoginSuccess>(LoginActionType.LOGIN_SUCCESS),
+		switchMap(() => this.store.select(getUser).pipe(take(1))),
+		tap(user => this.router.navigate([`blog/${user.visibleName}`])),
+	);
+
 	@Effect()
 	public readonly register$ = this.actions$.pipe(
 		ofType<Register>(RegisterActionType.REGISTER),
@@ -39,5 +49,10 @@ export class AuthEffects {
 		),
 	);
 
-	public constructor(private actions$: Actions, private authService: AuthRestService) {}
+	public constructor(
+		private actions$: Actions,
+		private authService: AuthRestService,
+		private router: Router,
+		private store: Store<{}>,
+	) {}
 }

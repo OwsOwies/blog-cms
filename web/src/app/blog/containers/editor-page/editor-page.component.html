@@ -1,0 +1,6 @@
+<mat-card style="margin: 40px;">
+	<mat-card-content>
+		<ckeditor [editor]="Editor" [(ngModel)]="model.editorData"></ckeditor>
+		<button mat-raised-button color="primary" (click)="onSubmit()" style="margin: 10px;">Add new blog post</button>
+	</mat-card-content>
+</mat-card>
