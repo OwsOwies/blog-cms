@@ -7,9 +7,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '../material.module';
 
 import { BlogRoutingModule } from './blog-routing.module';
+import { BioFormComponent } from './components/bio-form/bio-form.component';
 import { BioComponent } from './components/bio/bio.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
 import { BlogPageComponent } from './containers/blog-page/blog-page.component';
+import { EditBioPageComponent } from './containers/edit-bio-page/edit-bio-page.component';
 import { EditorPageComponent } from './containers/editor-page/editor-page.component';
 import { BlogEffects } from './effects/blog.effects';
 import { LoadBiographyResolver } from './guards/load-biography.resolver';
@@ -17,7 +19,14 @@ import { LoadPostsResolver } from './guards/load-posts.resolver';
 import { BlogRestService } from './services/blog.service';
 
 @NgModule({
-	declarations: [BlogPageComponent, BlogPostComponent, BioComponent, EditorPageComponent],
+	declarations: [
+		BlogPageComponent,
+		BlogPostComponent,
+		BioComponent,
+		BioFormComponent,
+		EditBioPageComponent,
+		EditorPageComponent,
+	],
 	imports: [
 		BlogRoutingModule,
 		CommonModule,

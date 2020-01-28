@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { getBiography, getBlogPosts, getUser } from 'src/app/reducer/application.selectors';
 import { User } from 'src/app/user/models';
@@ -27,8 +27,8 @@ export class BlogPageComponent implements OnDestroy {
 	public readonly pageSizeOptions = [5, 10, 25];
 	public blogName: string;
 
-	public constructor(private readonly store: Store<{}>, private readonly router: ActivatedRoute) {
-		this.blogName = this.router.snapshot.paramMap.get('name');
+	public constructor(private readonly store: Store<{}>, private readonly router: Router, private readonly activatedRoute: ActivatedRoute) {
+		this.blogName = this.activatedRoute.snapshot.paramMap.get('name');
 	}
 
 	public isBlogOwner(): boolean {
@@ -45,6 +45,10 @@ export class BlogPageComponent implements OnDestroy {
 
 	public onAddNewClick(): void {
 		this.store.dispatch(new OpenPostEditor(null));
+	}
+
+	public onBioEditClick(): void {
+		this.router.navigate(['editor-bio'])
 	}
 
 	public ngOnDestroy(): void {

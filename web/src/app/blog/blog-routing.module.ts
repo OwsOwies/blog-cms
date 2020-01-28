@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BlogPageComponent } from './containers/blog-page/blog-page.component';
+import { EditBioPageComponent } from './containers/edit-bio-page/edit-bio-page.component';
 import { EditorPageComponent } from './containers/editor-page/editor-page.component';
 import { LoadBiographyResolver } from './guards/load-biography.resolver';
 import { LoadPostsResolver } from './guards/load-posts.resolver';
@@ -18,6 +19,7 @@ const routes: Routes = [
 		path: 'blog',
 	},
 	{ path: 'editor', component: EditorPageComponent },
+	{ path: 'editor-bio', component: EditBioPageComponent },
 ];
 
 @NgModule({

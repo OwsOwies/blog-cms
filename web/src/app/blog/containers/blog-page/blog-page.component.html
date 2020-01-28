@@ -20,5 +20,13 @@
 	</mat-paginator>
 </div>
 <div class="bio-section">
+	<button
+		mat-raised-button
+		color="primary"
+		class="add-new-btn"
+		(click)="onBioEditClick()">
+			Edit biography	
+	</button>
 	<app-bio [bio]="bio$ | async"></app-bio>
 </div>
+

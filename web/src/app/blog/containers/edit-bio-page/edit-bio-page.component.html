@@ -1,0 +1,5 @@
+<mat-card>
+	<mat-card-content>
+		<app-bio-form (changeBio)="onBioChange($event)" [initialValues]="user$ | async"></app-bio-form>
+	</mat-card-content>
+</mat-card>
