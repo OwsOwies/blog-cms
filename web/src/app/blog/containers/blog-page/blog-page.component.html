@@ -3,13 +3,14 @@
 		mat-raised-button
 		color="primary"
 		class="add-new-btn"
+		*ngIf="isBlogOwner"
 		(click)="onAddNewClick()">
 			Add new blog post
 	</button>
 	<app-blog-post
 		*ngFor="let post of blogPosts$ | async"
 		[post]="post"
-		[isEditable]="true"
+		[isEditable]="isBlogOwner"
 		(delete)="onPostDelete(post)"
 		(edit)="onPostEdit(post)">
 	</app-blog-post>
@@ -19,6 +20,7 @@
 		mat-raised-button
 		color="primary"
 		class="add-new-btn"
+		*ngIf="isBlogOwner"
 		(click)="onBioEditClick()">
 			Edit biography	
 	</button>

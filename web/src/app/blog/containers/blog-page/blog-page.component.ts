@@ -31,7 +31,7 @@ export class BlogPageComponent implements OnDestroy {
 		this.blogName = this.activatedRoute.snapshot.paramMap.get('name');
 	}
 
-	public isBlogOwner(): boolean {
+	public get isBlogOwner(): boolean {
 		return this.user && this.user.visibleName === this.blogName;
 	}
 
