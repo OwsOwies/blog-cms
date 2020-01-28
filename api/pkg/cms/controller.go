@@ -115,7 +115,7 @@ func (cr *Controller) updateBlogPost(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "error occured during binding")
 	}
 
-	db := cr.Db.Model(blogPost).Update("Content")
+	db := cr.Db.Model(blogPost).Where("ID = ?", blogPost.ID).Update("content", blogPost.Content)
 
 	log.Print(db.Error)
 	if err := db.Error; err != nil {

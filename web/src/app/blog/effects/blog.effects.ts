@@ -35,6 +35,7 @@ import { BlogPost, BlogPostId } from '../models';
 import { BlogRestService } from '../services/blog.service';
 import { EditBiography, EditBiographyActionType, EditBiographySuccess, EditBiographyError } from '../actions/edit-biography.actions';
 import { BiographyValues } from 'src/app/user/models';
+import { EditPost, EditPostActionType, EditPostSuccess, EditPostError } from '../actions/edit-post.action';
 
 @Injectable()
 export class BlogEffects {
@@ -81,8 +82,11 @@ export class BlogEffects {
 	);
 
 	@Effect({ dispatch: false })
-	public readonly addBlogPostSuccess$ = this.actions$.pipe(
-		ofType<AddPostSuccess>(AddPostActionType.ADD_SUCCESS),
+	public readonly postSubmitSuccess$ = this.actions$.pipe(
+		ofType<AddPostSuccess | EditPostSuccess>(
+			AddPostActionType.ADD_SUCCESS,
+			EditPostActionType.EDIT_SUCCESS
+		),
 		switchMap(() => this.store.select(getUser).pipe(take(1))),
 		tap(user => this.router.navigate([`blog/${user.visibleName}`])),
 	);
@@ -120,6 +124,16 @@ export class BlogEffects {
 		ofType<EditBiographySuccess>(EditBiographyActionType.EDIT_SUCCESS),
 		pluck<EditBiographySuccess, BiographyValues>('payload'),
 		tap(values => this.router.navigate([`blog/${values.visibleName}`]))
+	)
+
+	@Effect()
+	public readonly editBlogPost$ = this.actions$.pipe(
+		ofType<EditPost>(EditPostActionType.EDIT),
+		pluck<EditPost, BlogPost>('payload'),
+		switchMap(post => this.blogService.updateBlogPost(post).pipe(
+			map(() => new EditPostSuccess(post)),
+			catchError(err => of(new EditPostError(err))),
+		))
 	)
 
 	public constructor(

@@ -22,6 +22,10 @@ export class BlogRestService {
 		return this.http.post<void>(`${this.API_URL}/posts/${userId}`, post);
 	}
 
+	public updateBlogPost(post: BlogPost): Observable<void> {
+		return this.http.put<void>(`${this.API_URL}/posts/${post.ID}`, post)
+	}
+
 	public getBiography(visibleName: string): Observable<BiographyValues> {
 		// tslint:disable-next-line no-console
 		console.log(visibleName);
