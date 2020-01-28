@@ -19,6 +19,12 @@ import {
 	DeletePostSuccess,
 } from '../actions/delete-post.actions';
 import {
+	LoadBiography,
+	LoadBiographyActionType,
+	LoadBiographyError,
+	LoadBiographySuccess,
+} from '../actions/load-biography.actions';
+import {
 	LoadPosts,
 	LoadPostsActionsType,
 	LoadPostsError,
@@ -77,6 +83,18 @@ export class BlogEffects {
 	public readonly openPostEditor$ = this.actions$.pipe(
 		ofType<OpenPostEditor>(OpenPostEditorActionType),
 		tap(() => this.router.navigate(['editor'])),
+	);
+
+	@Effect()
+	public readonly getBiography$ = this.actions$.pipe(
+		ofType<LoadBiography>(LoadBiographyActionType.LOAD),
+		pluck<LoadBiography, string>('payload'),
+		switchMap(blogName =>
+			this.blogService.getBiography(blogName).pipe(
+				map(bio => new LoadBiographySuccess(bio)),
+				catchError(err => of(new LoadBiographyError(err))),
+			),
+		),
 	);
 
 	public constructor(

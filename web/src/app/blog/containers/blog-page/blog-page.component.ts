@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { getBlogPosts, getUser } from 'src/app/reducer/application.selectors';
+import { getBiography, getBlogPosts, getUser } from 'src/app/reducer/application.selectors';
 import { User } from 'src/app/user/models';
 
 import { DeletePost } from '../../actions/delete-post.actions';
@@ -19,6 +19,8 @@ export class BlogPageComponent implements OnDestroy {
 	public readonly userSubscription = this.store
 		.pipe(select(getUser))
 		.subscribe(user => (this.user = user));
+
+	public readonly bio$ = this.store.pipe(select(getBiography));
 
 	public readonly pageSize = 10;
 	public readonly pageSizeOptions = [5, 10, 25];

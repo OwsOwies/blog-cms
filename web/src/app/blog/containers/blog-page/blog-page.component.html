@@ -1,14 +1,18 @@
-{{blogName}}
-<button mat-raised-button color="primary" (click)="onAddNewClick()">Add new blog post</button>
-<app-blog-post
-	*ngFor="let post of blogPosts$ | async"
-	[post]="post"
-	[isEditable]="true"
-	(delete)="onPostDelete(post)"
-	(edit)="onPostEdit(post)">
-</app-blog-post>
-<mat-paginator
-	[length]="(blogPosts$ | async)?.size"
-	[pageSize]="pageSize"
-	[pageSizeOptions]="pageSizeOptions">
-</mat-paginator>
+<div>
+	<app-bio [bio]="bio$ | async"></app-bio>
+</div>
+<div>
+	<button mat-raised-button color="primary" (click)="onAddNewClick()">Add new blog post</button>
+	<app-blog-post
+		*ngFor="let post of blogPosts$ | async"
+		[post]="post"
+		[isEditable]="true"
+		(delete)="onPostDelete(post)"
+		(edit)="onPostEdit(post)">
+	</app-blog-post>
+	<mat-paginator
+		[length]="(blogPosts$ | async)?.size"
+		[pageSize]="pageSize"
+		[pageSizeOptions]="pageSizeOptions">
+	</mat-paginator>
+</div>

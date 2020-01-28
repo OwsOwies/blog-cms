@@ -4,10 +4,14 @@ import { List } from 'immutable';
 import { LoginAction, LoginActionType } from '../auth/actions/login.actions';
 import { AddPostAction, AddPostActionType } from '../blog/actions/add-post.actions';
 import { DeletePostAction, DeletePostActionType } from '../blog/actions/delete-post.actions';
+import {
+	LoadBiographyAction,
+	LoadBiographyActionType,
+} from '../blog/actions/load-biography.actions';
 import { LoadPostsAction, LoadPostsActionsType } from '../blog/actions/load-posts.actions';
 import { OpenPostEditor, OpenPostEditorActionType } from '../blog/actions/open-post-editor';
 import { BlogPost } from '../blog/models';
-import { User } from '../user/models';
+import { BiographyValues, User } from '../user/models';
 
 export interface ApplicationState {
 	state: State;
@@ -18,7 +22,8 @@ export type AppAction =
 	| LoadPostsAction
 	| DeletePostAction
 	| AddPostAction
-	| OpenPostEditor;
+	| OpenPostEditor
+	| LoadBiographyAction;
 
 export const reducers: ActionReducerMap<ApplicationState, AppAction> = {
 	state: reducer,
@@ -28,9 +33,11 @@ export interface State {
 	editedPost: BlogPost | null;
 	posts: List<BlogPost>;
 	user: User | null;
+	bio: BiographyValues | null;
 }
 
 const initialState: State = {
+	bio: null,
 	editedPost: null,
 	posts: List(),
 	user: null,
@@ -61,6 +68,18 @@ export function reducer(state: State = initialState, action: AppAction): State {
 			return {
 				...state,
 				editedPost: action.payload,
+			};
+
+		case LoadBiographyActionType.LOAD:
+			return {
+				...state,
+				bio: null,
+			};
+
+		case LoadBiographyActionType.LOAD_SUCCESS:
+			return {
+				...state,
+				bio: action.payload,
 			};
 
 		default:

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { BiographyValues } from 'src/app/user/models';
 
 import { BlogPost, BlogPostId } from '../models';
 
@@ -28,5 +29,11 @@ export class BlogRestService {
 		// tslint:disable-next-line no-console
 		console.log(post, userId);
 		return of(undefined);
+	}
+
+	public getBiography(visibleName: string): Observable<BiographyValues> {
+		// tslint:disable-next-line no-console
+		console.log(visibleName);
+		return of({ bio: 'some bio', contact: 'some contact', login: 'some login', visibleName });
 	}
 }

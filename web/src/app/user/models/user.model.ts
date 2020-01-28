@@ -1,6 +1,4 @@
-import { List } from 'immutable';
 import { RegistrationValues } from 'src/app/auth/models';
-import { BlogPost } from 'src/app/blog/models';
 
 /** User JSON shape returned from API */
 export interface UserRaw extends RegistrationValues {
