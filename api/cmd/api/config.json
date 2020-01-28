@@ -1,0 +1,13 @@
+{
+    "db": {
+      "user": "owies",
+      "password": "owies",
+      "host": "localhost",
+      "port": 5432,
+      "dbname": "blog"
+    },
+    "api": {
+      "port": 1323,
+      "debug": true
+    }
+}

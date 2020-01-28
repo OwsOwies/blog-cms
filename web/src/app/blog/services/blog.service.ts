@@ -7,16 +7,11 @@ import { BlogPost, BlogPostId } from '../models';
 
 @Injectable()
 export class BlogRestService {
+	private API_URL = 'localhost:1343';
 	public constructor(private http: HttpClient) {}
 
-	public getBlogPosts(visibleName: string): Observable<BlogPost[]> {
-		// tslint:disable-next-line no-console
-		console.log(visibleName);
-		return of([
-			{ id: '1', date: new Date(), content: 'some content' },
-			{ id: '2', date: new Date(), content: 'some content 2' },
-			{ id: '3', date: new Date(), content: 'some content 3' },
-		]);
+	public getBlogPosts(userId: string): Observable<BlogPost[]> {
+		return this.http.get<BlogPost[]>(`${this.API_URL}/posts/${userId}`);
 	}
 
 	public deleteBlogPost(id: BlogPostId): Observable<void> {
