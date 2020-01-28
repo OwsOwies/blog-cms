@@ -7,6 +7,7 @@ import {
 	MatPaginatorModule,
 	MatProgressBarModule,
 	MatRippleModule,
+	MatSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -17,6 +18,7 @@ import {
 		MatInputModule,
 		MatPaginatorModule,
 		MatProgressBarModule,
+		MatSnackBarModule,
 		MatRippleModule,
 	],
 	imports: [
@@ -26,6 +28,7 @@ import {
 		MatInputModule,
 		MatPaginatorModule,
 		MatProgressBarModule,
+		MatSnackBarModule,
 		MatRippleModule,
 	],
 })

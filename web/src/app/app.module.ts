@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { BlogModule } from './blog/blog.module';
 import { MaterialModule } from './material.module';
 import { reducers } from './reducer/application.reducer';
+import { ErrorEffects } from './common/effects/error.effects';
 
 @NgModule({
 	bootstrap: [AppComponent],
@@ -22,7 +23,7 @@ import { reducers } from './reducer/application.reducer';
 		AppRoutingModule,
 		AuthModule,
 		BlogModule,
-		EffectsModule.forRoot([]),
+		EffectsModule.forRoot([ErrorEffects]),
 		HttpClientModule,
 		MaterialModule,
 		StoreModule.forRoot(reducers),
