@@ -1,5 +1,7 @@
 <mat-card>
 	<mat-card-content>
+		<div>Sign in to manage your blog</div>
 		<app-login-form (signIn)="onSignIn($event)"></app-login-form>
+		<a [routerLink]="['/auth/register']">Register here</a>
 	</mat-card-content>
 </mat-card>
