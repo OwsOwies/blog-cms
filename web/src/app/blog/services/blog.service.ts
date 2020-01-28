@@ -36,4 +36,10 @@ export class BlogRestService {
 		console.log(visibleName);
 		return of({ bio: 'some bio', contact: 'some contact', login: 'some login', visibleName });
 	}
+
+	public editBiography(values: BiographyValues): Observable<void> {
+		// tslint:disable-next-line no-console
+		console.log(values);
+		return of(undefined);
+	}
 }

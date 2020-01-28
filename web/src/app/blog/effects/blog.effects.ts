@@ -33,6 +33,8 @@ import {
 import { OpenPostEditor, OpenPostEditorActionType } from '../actions/open-post-editor';
 import { BlogPost, BlogPostId } from '../models';
 import { BlogRestService } from '../services/blog.service';
+import { EditBiography, EditBiographyActionType, EditBiographySuccess, EditBiographyError } from '../actions/edit-biography.actions';
+import { BiographyValues } from 'src/app/user/models';
 
 @Injectable()
 export class BlogEffects {
@@ -96,6 +98,23 @@ export class BlogEffects {
 			),
 		),
 	);
+	
+	@Effect()
+	public readonly editBiography$ = this.actions$.pipe(
+		ofType<EditBiography>(EditBiographyActionType.EDIT),
+		pluck<EditBiography, BiographyValues>('payload'),
+		switchMap(bioValues => this.blogService.editBiography(bioValues).pipe(
+			map(() => new EditBiographySuccess(bioValues)),
+			catchError(err => of(new EditBiographyError(err))),
+		))
+	);
+
+	@Effect({ dispatch: false })
+	public readonly editBiographySuccess$ = this.actions$.pipe(
+		ofType<EditBiographySuccess>(EditBiographyActionType.EDIT_SUCCESS),
+		pluck<EditBiographySuccess, BiographyValues>('payload'),
+		tap(values => this.router.navigate([`blog/${values.visibleName}`]))
+	)
 
 	public constructor(
 		private actions$: Actions,

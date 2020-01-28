@@ -6,7 +6,7 @@ export interface UserRaw extends RegistrationValues {
 }
 
 export class User {
-	private constructor(
+	public constructor(
 		public readonly bio: string,
 		public readonly contact: string,
 		public readonly isAdmin: boolean,

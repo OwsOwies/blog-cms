@@ -3,6 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { getUser } from 'src/app/reducer/application.selectors';
 import { BiographyValues } from 'src/app/user/models';
 
+import { EditBiography } from '../../actions/edit-biography.actions';
+
 @Component({
 	selector: 'app-edit-bio-page',
 	styleUrls: ['./edit-bio-page.component.scss'],
@@ -14,6 +16,6 @@ export class EditBioPageComponent {
 	public constructor(private store: Store<{}>) {}
 
 	public onBioChange(values: BiographyValues): void {
-		// TODO
+		this.store.dispatch(new EditBiography(values));
 	}
 }
