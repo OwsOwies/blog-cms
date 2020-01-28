@@ -10,6 +10,7 @@ import { BlogPost } from '../../models';
 
 @Component({
 	selector: 'app-blog-page',
+	styleUrls: ['./blog-page.component.scss'],
 	templateUrl: './blog-page.component.html',
 })
 export class BlogPageComponent implements OnDestroy {

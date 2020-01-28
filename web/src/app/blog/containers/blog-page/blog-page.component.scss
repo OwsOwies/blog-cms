@@ -1,0 +1,17 @@
+:host {
+	display: flex;
+	flex-direction: row;
+
+	.add-new-btn {
+		margin-top: 20px;
+		margin-left: 20px;
+	}
+
+	.post-section {
+		width: 70%;
+	}
+
+	.bio-section {
+		width: 30%;
+	}
+}
